@@ -1,0 +1,626 @@
+@baseUrl = http://localhost:3000
+@invalidId = invalid
+@missingId = 000000000000000000000000
+@filmId = {{film.response.body.$.id}}
+@hallId = {{hall.response.body.$.id}}
+@showingId = {{showing.response.body.$.id}}
+@bookingId = {{booking.response.body.$.id}}
+
+###
+# @name film
+POST {{baseUrl}}/films
+Content-Type: application/json
+
+{
+  "title": "Interstellar",
+  "durationMinutes": 169,
+  "releaseYear": 2014
+}
+
+###
+GET {{baseUrl}}/films
+
+
+###
+GET {{baseUrl}}/films/{{filmId}}
+
+
+###
+PATCH {{baseUrl}}/films/{{filmId}}
+Content-Type: application/json
+
+{
+  "title": "Interstellar updated"
+}
+
+###
+# @name hall
+POST {{baseUrl}}/halls
+Content-Type: application/json
+
+{
+  "name": "Main",
+  "rows": 3,
+  "seatsPerRow": 5
+}
+
+###
+GET {{baseUrl}}/halls
+
+
+###
+GET {{baseUrl}}/halls/{{hallId}}
+
+
+###
+# @name showing
+POST {{baseUrl}}/showings
+Content-Type: application/json
+
+{
+  "filmId": "{{filmId}}",
+  "hallId": "{{hallId}}",
+  "startsAt": "2099-06-15T12:00:00Z",
+  "price": 12500
+}
+
+###
+GET {{baseUrl}}/showings
+
+
+###
+GET {{baseUrl}}/showings?filmId={{filmId}}
+
+
+###
+GET {{baseUrl}}/showings?date=2099-06-15
+
+
+###
+GET {{baseUrl}}/showings?filmId={{filmId}}&date=2099-06-15
+
+
+###
+GET {{baseUrl}}/showings/{{showingId}}
+
+
+###
+GET {{baseUrl}}/showings/{{showingId}}/seats
+
+
+###
+GET {{baseUrl}}/bookings
+
+
+###
+# @name booking
+POST {{baseUrl}}/showings/{{showingId}}/bookings
+Content-Type: application/json
+
+{
+  "seats": [
+    {
+      "row": 1,
+      "seat": 1
+    },
+    {
+      "row": 1,
+      "seat": 2
+    }
+  ]
+}
+
+###
+GET {{baseUrl}}/bookings
+
+
+###
+GET {{baseUrl}}/showings/{{showingId}}/bookings
+
+
+###
+GET {{baseUrl}}/showings/{{showingId}}/seats
+
+
+###
+POST {{baseUrl}}/films
+Content-Type: application/json
+
+{}
+
+###
+POST {{baseUrl}}/films
+Content-Type: application/json
+
+{
+  "title": 12,
+  "durationMinutes": "90",
+  "releaseYear": false
+}
+
+###
+POST {{baseUrl}}/films
+Content-Type: application/json
+
+{
+  "title": "Interstellar",
+  "durationMinutes": 0,
+  "releaseYear": 2014
+}
+
+###
+POST {{baseUrl}}/films
+Content-Type: application/json
+
+{
+  "title": "Interstellar",
+  "durationMinutes": 1.5,
+  "releaseYear": 2014
+}
+
+###
+PATCH {{baseUrl}}/films/{{filmId}}
+Content-Type: application/json
+
+{
+  "durationMinutes": "90"
+}
+
+###
+PATCH {{baseUrl}}/films/{{filmId}}
+Content-Type: application/json
+
+{
+  "title": null
+}
+
+###
+GET {{baseUrl}}/films/{{missingId}}
+
+
+###
+PATCH {{baseUrl}}/films/{{missingId}}
+Content-Type: application/json
+
+{}
+
+###
+DELETE {{baseUrl}}/films/{{missingId}}
+
+
+###
+GET {{baseUrl}}/halls/{{missingId}}
+
+
+###
+DELETE {{baseUrl}}/halls/{{missingId}}
+
+
+###
+GET {{baseUrl}}/showings/{{missingId}}
+
+
+###
+DELETE {{baseUrl}}/films/{{filmId}}
+
+
+###
+DELETE {{baseUrl}}/halls/{{hallId}}
+
+
+###
+POST {{baseUrl}}/halls
+Content-Type: application/json
+
+{}
+
+###
+POST {{baseUrl}}/halls
+Content-Type: application/json
+
+{
+  "name": "Main",
+  "rows": "3",
+  "seatsPerRow": 5
+}
+
+###
+POST {{baseUrl}}/halls
+Content-Type: application/json
+
+{
+  "name": "Main",
+  "rows": 0,
+  "seatsPerRow": 5
+}
+
+###
+POST {{baseUrl}}/halls
+Content-Type: application/json
+
+{
+  "name": "Main",
+  "rows": 3,
+  "seatsPerRow": 1.5
+}
+
+###
+POST {{baseUrl}}/halls
+Content-Type: application/json
+
+{
+  "name": "Main",
+  "rows": 3,
+  "seatsPerRow": 5
+}
+
+###
+POST {{baseUrl}}/showings
+Content-Type: application/json
+
+{}
+
+###
+POST {{baseUrl}}/showings
+Content-Type: application/json
+
+{
+  "filmId": "{{missingId}}",
+  "hallId": "{{hallId}}",
+  "startsAt": "2099-06-15T12:00:00Z",
+  "price": 12500
+}
+
+###
+POST {{baseUrl}}/showings
+Content-Type: application/json
+
+{
+  "filmId": "{{filmId}}",
+  "hallId": "{{missingId}}",
+  "startsAt": "2099-06-15T12:00:00Z",
+  "price": 12500
+}
+
+###
+POST {{baseUrl}}/showings
+Content-Type: application/json
+
+{
+  "filmId": "{{filmId}}",
+  "hallId": "{{hallId}}",
+  "startsAt": "not-a-date",
+  "price": 12500
+}
+
+###
+POST {{baseUrl}}/showings
+Content-Type: application/json
+
+{
+  "filmId": "{{filmId}}",
+  "hallId": "{{hallId}}",
+  "startsAt": "2099-02-30T12:00:00Z",
+  "price": 12500
+}
+
+###
+POST {{baseUrl}}/showings
+Content-Type: application/json
+
+{
+  "filmId": "{{filmId}}",
+  "hallId": "{{hallId}}",
+  "startsAt": "2000-01-01T12:00:00Z",
+  "price": 12500
+}
+
+###
+POST {{baseUrl}}/showings
+Content-Type: application/json
+
+{
+  "filmId": "{{filmId}}",
+  "hallId": "{{hallId}}",
+  "startsAt": "2099-06-15T12:00:00Z",
+  "price": 0
+}
+
+###
+POST {{baseUrl}}/showings
+Content-Type: application/json
+
+{
+  "filmId": "{{filmId}}",
+  "hallId": "{{hallId}}",
+  "startsAt": "2099-06-15T12:00:00Z",
+  "price": 1.5
+}
+
+###
+POST {{baseUrl}}/showings
+Content-Type: application/json
+
+{
+  "filmId": "{{filmId}}",
+  "hallId": "{{hallId}}",
+  "startsAt": "2099-06-15T12:00:00Z",
+  "price": "12500"
+}
+
+###
+GET {{baseUrl}}/showings?date=15-06-2099
+
+
+###
+GET {{baseUrl}}/showings?date=2099-02-30
+
+
+###
+GET {{baseUrl}}/showings/{{missingId}}/seats
+
+
+###
+GET {{baseUrl}}/showings/{{missingId}}/bookings
+
+
+###
+POST {{baseUrl}}/showings/{{missingId}}/bookings
+Content-Type: application/json
+
+{
+  "seats": [
+    {
+      "row": 1,
+      "seat": 1
+    }
+  ]
+}
+
+###
+POST {{baseUrl}}/showings/{{showingId}}/bookings
+Content-Type: application/json
+
+{
+  "seats": []
+}
+
+###
+POST {{baseUrl}}/showings/{{showingId}}/bookings
+Content-Type: application/json
+
+{
+  "seats": [
+    {
+      "row": 1
+    }
+  ]
+}
+
+###
+POST {{baseUrl}}/showings/{{showingId}}/bookings
+Content-Type: application/json
+
+{
+  "seats": [
+    {
+      "row": 1,
+      "seat": "1"
+    }
+  ]
+}
+
+###
+POST {{baseUrl}}/showings/{{showingId}}/bookings
+Content-Type: application/json
+
+{
+  "seats": [
+    {
+      "row": 1,
+      "seat": 3
+    },
+    {
+      "row": 1,
+      "seat": 3
+    }
+  ]
+}
+
+###
+POST {{baseUrl}}/showings/{{showingId}}/bookings
+Content-Type: application/json
+
+{
+  "seats": [
+    {
+      "row": 4,
+      "seat": 1
+    }
+  ]
+}
+
+###
+POST {{baseUrl}}/showings/{{showingId}}/bookings
+Content-Type: application/json
+
+{
+  "seats": [
+    {
+      "row": 1,
+      "seat": 6
+    }
+  ]
+}
+
+###
+POST {{baseUrl}}/showings/{{showingId}}/bookings
+Content-Type: application/json
+
+{
+  "seats": [
+    {
+      "row": 0,
+      "seat": 1
+    }
+  ]
+}
+
+###
+POST {{baseUrl}}/showings/{{showingId}}/bookings
+Content-Type: application/json
+
+{
+  "seats": [
+    {
+      "row": 1,
+      "seat": 1.5
+    }
+  ]
+}
+
+###
+POST {{baseUrl}}/showings/{{showingId}}/bookings
+Content-Type: application/json
+
+{
+  "seats": [
+    null
+  ]
+}
+
+###
+POST {{baseUrl}}/showings/{{showingId}}/bookings
+Content-Type: application/json
+
+{
+  "seats": [
+    {
+      "row": 1,
+      "seat": 3
+    },
+    {
+      "row": 1,
+      "seat": 1
+    }
+  ]
+}
+
+###
+GET {{baseUrl}}/showings/{{showingId}}/seats
+
+
+###
+DELETE {{baseUrl}}/bookings/{{bookingId}}
+
+
+###
+GET {{baseUrl}}/showings/{{showingId}}/seats
+
+
+###
+DELETE {{baseUrl}}/bookings/{{bookingId}}
+
+
+###
+DELETE {{baseUrl}}/bookings/{{missingId}}
+
+
+###
+# @name disposableFilm
+POST {{baseUrl}}/films
+Content-Type: application/json
+
+{
+  "title": "Interstellar",
+  "durationMinutes": 169,
+  "releaseYear": 2014
+}
+
+###
+DELETE {{baseUrl}}/films/{{disposableFilm.response.body.$.id}}
+
+
+###
+# @name disposableHall
+POST {{baseUrl}}/halls
+Content-Type: application/json
+
+{
+  "name": "Disposable",
+  "rows": 3,
+  "seatsPerRow": 5
+}
+
+###
+DELETE {{baseUrl}}/halls/{{disposableHall.response.body.$.id}}
+
+
+###
+GET {{baseUrl}}/showings?filmId={{filmId}}&page=2&limit=1&sort=desc
+
+###
+GET {{baseUrl}}/showings?page=0
+
+###
+GET {{baseUrl}}/showings?page=1.5
+
+###
+GET {{baseUrl}}/showings?limit=101
+
+###
+GET {{baseUrl}}/showings?limit=2.5
+
+###
+GET {{baseUrl}}/showings?sort=newest
+
+###
+GET {{baseUrl}}/showings?filmId={{invalidId}}
+
+###
+GET {{baseUrl}}/films/{{invalidId}}
+
+###
+PATCH {{baseUrl}}/films/{{invalidId}}
+Content-Type: application/json
+
+{}
+
+###
+DELETE {{baseUrl}}/films/{{invalidId}}
+
+###
+GET {{baseUrl}}/halls/{{invalidId}}
+
+###
+DELETE {{baseUrl}}/halls/{{invalidId}}
+
+###
+GET {{baseUrl}}/showings/{{invalidId}}
+
+###
+GET {{baseUrl}}/showings/{{invalidId}}/seats
+
+###
+GET {{baseUrl}}/showings/{{invalidId}}/bookings
+
+###
+POST {{baseUrl}}/showings/{{invalidId}}/bookings
+Content-Type: application/json
+
+{"seats":[{"row":1,"seat":1}]}
+
+###
+DELETE {{baseUrl}}/bookings/{{invalidId}}
+
+###
+POST {{baseUrl}}/showings
+Content-Type: application/json
+
+{"filmId":"{{invalidId}}","hallId":"{{hallId}}","startsAt":"2099-06-15T12:00:00Z","price":12500}
+
+###
+POST {{baseUrl}}/showings
+Content-Type: application/json
+
+{"filmId":"{{filmId}}","hallId":"{{invalidId}}","startsAt":"2099-06-15T12:00:00Z","price":12500}
